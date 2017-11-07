@@ -11,10 +11,10 @@
 struct Activity
 {
 	std::string Name;
-	int Manhours_Per_Mile;	//2
-	int Men_Per_Gang;		//3
+	float Manhours_Per_Mile;	//2
+	float Men_Per_Gang;		//3
 	float Theoretical_Gang_Size;	//4
-	int Actual_Gang_Size;		//5
+	float Actual_Gang_Size;		//5
 	float Actual_Output_Rate;	//6
 	float Activity_Duration_Per_Mile;	//7
 	float Time_From_Start_to_Last;		//8
@@ -24,7 +24,7 @@ struct Activity
 	{
 		Theoretical_Gang_Size = Manhours_Per_Mile * R / (WH * WD);
 		Actual_Gang_Size = get_Actual(Theoretical_Gang_Size);
-		Actual_Output_Rate = R * Actual_Gang_Size / Men_Per_Gang;
+		Actual_Output_Rate = R * Actual_Gang_Size / Theoretical_Gang_Size;
 		Activity_Duration_Per_Mile = Manhours_Per_Mile / (WH * Men_Per_Gang);
 		Time_From_Start_to_Last = ((TM - 1) * Manhours_Per_Mile) / (WH * Actual_Gang_Size);
 	}
@@ -59,9 +59,9 @@ struct Activity
 
 	void Print() const
 	{
-		std::cout << Name << " " << Manhours_Per_Mile << " " << Men_Per_Gang << " " << Theoretical_Gang_Size
-			<< " " << Actual_Gang_Size << " " << Actual_Output_Rate << " " << Activity_Duration_Per_Mile
-			<< " " << Time_From_Start_to_Last << " " << Min_Buffer_Time;
+		std::cout << Name << "\t" << Manhours_Per_Mile << "\t" << Men_Per_Gang << "\t" << Theoretical_Gang_Size
+			<< "\t" << Actual_Gang_Size << "\t" << Actual_Output_Rate << "\t" << Activity_Duration_Per_Mile
+			<< "\t" << Time_From_Start_to_Last << "\t" << Min_Buffer_Time;
 		std::cout << std::endl;
 	}
 };
@@ -73,7 +73,7 @@ int main()
 	Activity A("Excavation", 384, 8);
 	Activity B("String Pipe", 128, 4);
 	Activity C("Lay Pipe", 168, 3);
-	Activity D("Test", 48, 2);
+	Activity D("Test\t", 48, 2);
 	Activity E("Backfill", 240, 6);
 	LOB.emplace_back(A);
 	LOB.emplace_back(B);
